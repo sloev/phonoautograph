@@ -11,28 +11,33 @@ class makeSpiral {
   float rotated=0;
 
   float grow=0;
-  float growFactor=0.0003333;
+  float growFactor=0.003333;
 
   makeSpiral() {
     w=width/2;
     h=height/2;
-    x=w;
-    y=h;
-    rot=(60*1000)/(33.333333333);
+    rot=(0.6)/(33.333333333);
+    growFactor=rot*2;
     grow=0;
   }
 
   void make() {
-    lastx=x;
-    lasty=y;
+
+    translate(w, h);
+
+    // Convert polar to cartesian
+    x = grow * cos(rotated);
+    y = grow * sin(rotated);
+
     rotated+=rot;
     grow+=growFactor;
-    x=w+(grow*cos(degrees(rotated)));
-    y=h+(grow*sin(degrees(rotated)));
 
     line(lastx, lasty, x, y);
+    stroke(255, 255, 255);
     point(x, y);
-    println(x+"\t"+y);
+    println(x+"\t"+y+"\t"+lastx+"\t"+lasty);
+    lastx=x;
+    lasty=y;
   }
 }
 
