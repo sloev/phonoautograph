@@ -13,7 +13,11 @@ class makeSpiral {
   float grow=0;
   float growFactor=0.003333;
 
+  int maxRounds=0;
+  int countRounds=0;
+
   makeSpiral() {
+    maxRounds=10;
     w=width/2;
     h=height/2;
     rot=(0.6)/(33.333333333);
@@ -21,23 +25,30 @@ class makeSpiral {
     grow=0;
   }
 
-  void make() {
+  boolean make() {
+    if (maxRounds>countRounds) {
+      translate(w, h);
 
-    translate(w, h);
+      float randomsin=((noise(millis())+sin(millis()/100)*2));
+      float randomcos=((noise(millis())+cos(millis()/100)*2));
 
-    // Convert polar to cartesian
-    x = grow * cos(rotated);
-    y = grow * sin(rotated);
+      // Convert polar to cartesian
+      x = (grow+randomcos) * cos(rotated);
+      y = (grow +randomsin) * sin(rotated);
 
-    rotated+=rot;
-    grow+=growFactor;
+      rotated+=rot;
+      grow+=growFactor;
+      strokeWeight(0.5);
+      line(lastx, lasty, x, y);
+      stroke(255, 255, 255);
+      //point(x, y);
+      println(x+"\t"+y+"\t"+lastx+"\t"+lasty);
+      lastx=x;
+      lasty=y;
 
-    line(lastx, lasty, x, y);
-    stroke(255, 255, 255);
-    point(x, y);
-    println(x+"\t"+y+"\t"+lastx+"\t"+lasty);
-    lastx=x;
-    lasty=y;
+      return false;
+    }
+    return true;
   }
 }
 
